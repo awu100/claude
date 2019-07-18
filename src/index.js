@@ -25,7 +25,7 @@ client.once("ready", () => {
 
         if (seconds < 3600) {
           const minutes = parseInt(seconds / 60);
-          const secs = parseInt(seconds - minutes / (seconds % 60));
+          const secs = parseInt(seconds - minutes * 60);
           message.channel.send(
             `I've been up for ${minutes} minutes and ${secs} seconds.`
           );
