@@ -1,6 +1,6 @@
 const plural = number => (number > 1 ? "s" : "");
 
-module.exports = (message, uptime) => {
+module.exports = (message, uptime, hostname) => {
   const hours = parseInt(uptime / 3600);
   const minutes = parseInt((uptime - hours * 3600) / 60);
   const seconds = uptime - (hours * 3600 + minutes * 60);
@@ -18,5 +18,5 @@ module.exports = (message, uptime) => {
     uptimeString += ` ${seconds} second${plural(seconds)}`;
   }
 
-  message.channel.send(uptimeString);
+  message.channel.send(`${uptimeString} on ${hostname}`);
 };

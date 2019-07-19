@@ -1,6 +1,6 @@
 const commands = require("./commands");
 const doCommand = require("./doCommand");
-const commandSplitter = require("../utils/commandSplitter");
+const commandSplitter = require("./commandSplitter");
 
 module.exports = (message, client) => {
   const commandString = message.content;
