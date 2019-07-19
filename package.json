@@ -6,7 +6,8 @@
   "license": "cc-by-4.0",
   "private": true,
   "scripts": {
-    "start": "nodemon src"
+    "start": "nodemon src",
+    "test": "jest ./src"
   },
   "dependencies": {
     "discord.js": "^11.5.1",
