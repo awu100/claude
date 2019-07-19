@@ -7,7 +7,17 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./src",
-    "test": "jest ./src"
+    "test": "jest"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/index.js"
+    ],
+    "roots": [
+      "src"
+    ]
   },
   "dependencies": {
     "discord.js": "^11.5.1",

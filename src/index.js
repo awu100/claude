@@ -7,7 +7,7 @@ client.once("ready", () => {
   console.log("Connected to discord");
 
   client.on("message", message => {
-    if (message.channel.type !== "dm" || message.author.bot) {
+    if (message.author.bot) {
       return;
     }
 

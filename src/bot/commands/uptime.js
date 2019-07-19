@@ -1,6 +1,10 @@
 const plural = number => (number > 1 ? "s" : "");
 
 module.exports = (message, uptime, hostname) => {
+  if (message.channel.type !== "dm") {
+    return;
+  }
+
   const hours = parseInt(uptime / 3600);
   const minutes = parseInt((uptime - hours * 3600) / 60);
   const seconds = uptime - (hours * 3600 + minutes * 60);

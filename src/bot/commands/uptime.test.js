@@ -1,6 +1,7 @@
 const uptime = require("./uptime");
 const message = {
   channel: {
+    type: "dm",
     send: jest.fn()
   }
 };
@@ -8,6 +9,7 @@ const hostname = "banana";
 
 describe("Uptime", () => {
   beforeEach(() => {
+    message.channel.type = "dm";
     jest.resetAllMocks();
   });
 
@@ -57,5 +59,11 @@ describe("Uptime", () => {
     expect(message.channel.send).toHaveBeenCalledWith(
       "I've been up for 2 hours 13 minutes 20 seconds on banana"
     );
+  });
+
+  test("No reponse if message is not from dm", () => {
+    message.channel.type = "something else";
+    uptime(message, 8000, hostname);
+    expect(message.channel.send).not.toHaveBeenCalled();
   });
 });
