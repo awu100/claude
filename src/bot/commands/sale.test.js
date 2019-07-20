@@ -12,7 +12,7 @@ describe("Sale", () => {
     message = {
       author: "BananaMan",
       channel: {
-        name: "general"
+        name: "session-chat"
       }
     };
   });
@@ -24,7 +24,7 @@ describe("Sale", () => {
   });
 
   test("no post because message was in the wrong queue", () => {
-    message.channel.name = "Preston";
+    message.channel.name = "preston";
     sale({ params: "2mc", message, client });
 
     expect(client.channels[0].send).not.toHaveBeenCalled();

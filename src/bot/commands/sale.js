@@ -1,5 +1,5 @@
 module.exports = ({ params, message, client }) => {
-  if (message.channel.name !== "general") {
+  if (message.channel.name !== "session-chat") {
     return;
   }
 
