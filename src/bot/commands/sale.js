@@ -1,11 +1,16 @@
 module.exports = ({ params, message, client }) => {
-  if (message.channel.name !== "session-chat") {
+  if (message.channel.name !== "session-chat" || !params) {
     return;
   }
 
   const salesQueue = client.channels.find(
-    channel => channel.name === "sales-queue"
+    channel =>
+      channel.name === "sales-queue" && channel.parent == message.channel.parent
   );
+
+  if (!salesQueue) {
+    return;
+  }
 
   salesQueue.send(`${message.author}: ${params}`);
 };

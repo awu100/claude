@@ -6,7 +6,7 @@ describe("Command Splitter", () => {
 
     expect(commandSplitter(command)).toMatchObject({
       command: "uptime",
-      params: ""
+      params: null
     });
   });
 

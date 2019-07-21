@@ -9,7 +9,7 @@ function commandSplitter(commandString) {
 
   return {
     command,
-    params: params.join(" ")
+    params: params.length > 0 ? params.join(" ") : null
   };
 }
 

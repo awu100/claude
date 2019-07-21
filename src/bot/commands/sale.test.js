@@ -1,32 +1,57 @@
 const sale = require("./sale");
 
-let message;
-
-const client = {
-  channels: [{ name: "sales-queue", send: jest.fn() }]
-};
-
 describe("Sale", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-    message = {
+  const client = {
+    channels: [
+      { name: "sales-queue", parent: "XB", send: jest.fn() },
+      { name: "sales-queue", parent: "PS", send: jest.fn() }
+    ]
+  };
+
+  function messageWith({ name, parent } = {}) {
+    return {
       author: "BananaMan",
       channel: {
-        name: "session-chat"
+        name: name || "session-chat",
+        parent: parent || "PS"
       }
     };
+  }
+
+  let message;
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+    message = messageWith();
   });
 
   test("posts sale to sales-queue", () => {
     sale({ params: "2mc", message, client });
 
-    expect(client.channels[0].send).toHaveBeenCalledWith("BananaMan: 2mc");
+    expect(client.channels[1].send).toHaveBeenCalledWith("BananaMan: 2mc");
+    expect(client.channels[0].send).not.toHaveBeenCalled();
   });
 
   test("no post because message was in the wrong queue", () => {
-    message.channel.name = "preston";
+    message = messageWith({ name: "something" });
     sale({ params: "2mc", message, client });
 
+    expect(client.channels[1].send).not.toHaveBeenCalled();
+    expect(client.channels[0].send).not.toHaveBeenCalled();
+  });
+
+  test("no post because no parameters", () => {
+    sale({ params: "", message, client });
+
+    expect(client.channels[1].send).not.toHaveBeenCalled();
+    expect(client.channels[0].send).not.toHaveBeenCalled();
+  });
+
+  test("no post because can't find saleQueue in matching category", () => {
+    message = messageWith({ parent: "something" });
+    sale({ params: "2mc", message, client });
+
+    expect(client.channels[1].send).not.toHaveBeenCalled();
     expect(client.channels[0].send).not.toHaveBeenCalled();
   });
 });
