@@ -41,7 +41,7 @@ describe("Sale", () => {
   });
 
   test("no post because no parameters", () => {
-    sale({ params: "", message, client });
+    sale({ params: null, message, client });
 
     expect(client.channels[1].send).not.toHaveBeenCalled();
     expect(client.channels[0].send).not.toHaveBeenCalled();

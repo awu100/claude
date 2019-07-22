@@ -3,9 +3,12 @@ function commandSplitter(commandString) {
     return null;
   }
 
-  const commandStringArray = commandString.substring(1).split(" ");
+  const commandStringArray = commandString
+    .substring(1)
+    .trim()
+    .split(" ");
   const command = commandStringArray[0];
-  const [_, ...params] = commandStringArray;
+  let [_, ...params] = commandStringArray;
 
   return {
     command,

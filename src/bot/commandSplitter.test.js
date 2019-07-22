@@ -10,6 +10,15 @@ describe("Command Splitter", () => {
     });
   });
 
+  test("Command with no parameters but space after", () => {
+    const command = "!sale ";
+
+    expect(commandSplitter(command)).toMatchObject({
+      command: "sale",
+      params: null
+    });
+  });
+
   test("Command and 1 word parameter string", () => {
     const command = "!sale 2mc";
 

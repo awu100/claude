@@ -1,8 +1,7 @@
 const commands = require("./commands");
 const doCommand = require("./doCommand");
 const commandSplitter = require("./commandSplitter");
-
-const reaction = require("./reaction");
+const handleReaction = require("./reaction");
 
 function handleMessage(message, client) {
   const commandString = message.content;
@@ -16,4 +15,4 @@ function handleMessage(message, client) {
   }, 500);
 }
 
-module.exports = { handleMessage, handleReaction: reaction };
+module.exports = { handleMessage, handleReaction };
