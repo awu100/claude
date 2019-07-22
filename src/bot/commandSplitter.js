@@ -12,7 +12,7 @@ function commandSplitter(commandString) {
 
   return {
     command,
-    params: params.length > 0 ? params.join(" ") : null
+    params: params.length > 0 ? params.join(" ").trim() : null
   };
 }
 

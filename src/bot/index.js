@@ -4,8 +4,7 @@ const commandSplitter = require("./commandSplitter");
 const handleReaction = require("./reaction");
 
 function handleMessage(message, client) {
-  const commandString = message.content;
-  const command = commandSplitter(commandString);
+  const command = commandSplitter(message.content);
   if (!command) {
     return;
   }
