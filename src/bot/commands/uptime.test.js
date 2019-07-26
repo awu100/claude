@@ -13,51 +13,59 @@ describe("Uptime", () => {
     jest.resetAllMocks();
   });
 
-  test("30 seconds", () => {
+  test("Singular second", () => {
+    uptime(message, 1, hostname);
+    expect(message.channel.send).toHaveBeenCalledWith(
+      "I've been up for 1 second on banana"
+    );
+  });
+
+  test("Plural seconds", () => {
     uptime(message, 30, hostname);
     expect(message.channel.send).toHaveBeenCalledWith(
       "I've been up for 30 seconds on banana"
     );
   });
 
-  test("60 seconds", () => {
+  test("Singular minute", () => {
     uptime(message, 60, hostname);
     expect(message.channel.send).toHaveBeenCalledWith(
       "I've been up for 1 minute on banana"
     );
   });
 
-  test("61 seconds", () => {
-    uptime(message, 61, hostname);
+  test("Plural Minutes", () => {
+    uptime(message, 150, hostname);
     expect(message.channel.send).toHaveBeenCalledWith(
-      "I've been up for 1 minute 1 second on banana"
+      "I've been up for 2 minutes 30 seconds on banana"
     );
   });
 
-  test("119 seconds", () => {
-    uptime(message, 119, hostname);
-    expect(message.channel.send).toHaveBeenCalledWith(
-      "I've been up for 1 minute 59 seconds on banana"
-    );
-  });
-
-  test("300 seconds", () => {
-    uptime(message, 300, hostname);
-    expect(message.channel.send).toHaveBeenCalledWith(
-      "I've been up for 5 minutes on banana"
-    );
-  });
-
-  test("4000 seconds", () => {
+  test("Singular hour", () => {
     uptime(message, 4000, hostname);
     expect(message.channel.send).toHaveBeenCalledWith(
       "I've been up for 1 hour 6 minutes 40 seconds on banana"
     );
   });
-  test("8000 seconds", () => {
+
+  test("Plural hours", () => {
     uptime(message, 8000, hostname);
     expect(message.channel.send).toHaveBeenCalledWith(
       "I've been up for 2 hours 13 minutes 20 seconds on banana"
+    );
+  });
+
+  test("Singular day", () => {
+    uptime(message, 100000, hostname);
+    expect(message.channel.send).toHaveBeenCalledWith(
+      "I've been up for 1 day 3 hours 46 minutes 40 seconds on banana"
+    );
+  });
+
+  test("Plural day", () => {
+    uptime(message, 200000, hostname);
+    expect(message.channel.send).toHaveBeenCalledWith(
+      "I've been up for 2 days 7 hours 33 minutes 20 seconds on banana"
     );
   });
 

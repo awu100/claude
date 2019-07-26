@@ -1,26 +1,44 @@
-const plural = number => (number > 1 ? "s" : "");
+const pluralize = (word, number) => `${number} ${word}${number > 1 ? "s" : ""}`;
 
 module.exports = (message, uptime, hostname) => {
   if (message.channel.type !== "dm") {
     return;
   }
 
-  const hours = parseInt(uptime / 3600);
-  const minutes = parseInt((uptime - hours * 3600) / 60);
-  const seconds = uptime - (hours * 3600 + minutes * 60);
+  const one = {
+    day: 86400,
+    hour: 3600,
+    minute: 60
+  };
 
-  let uptimeString = "I've been up for";
+  let remaining = uptime;
+  const days = parseInt(remaining / one.day);
+  remaining -= days * one.day;
+  const hours = parseInt(remaining / one.hour);
+  remaining -= hours * one.hour;
+  const minutes = parseInt(remaining / one.minute);
+  remaining -= minutes * one.minute;
+  const seconds = remaining;
+
+  let uptimeParts = [];
+
+  if (days > 0) {
+    uptimeParts.push(pluralize("day", days));
+  }
+
   if (hours > 0) {
-    uptimeString += ` ${hours} hour${plural(hours)}`;
+    uptimeParts.push(pluralize("hour", hours));
   }
 
   if (minutes > 0) {
-    uptimeString += ` ${minutes} minute${plural(minutes)}`;
+    uptimeParts.push(pluralize("minute", minutes));
   }
 
   if (seconds > 0) {
-    uptimeString += ` ${seconds} second${plural(seconds)}`;
+    uptimeParts.push(pluralize("second", seconds));
   }
 
-  message.channel.send(`${uptimeString} on ${hostname}`);
+  message.channel.send(
+    `I've been up for ${uptimeParts.join(" ")} on ${hostname}`
+  );
 };
