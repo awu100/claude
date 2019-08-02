@@ -1,4 +1,4 @@
-module.exports = ({ params, message, client }, db) => {
+module.exports = ({ params, message, client }, db, shortid) => {
     if (message.channel.name !== "sessions-chat" || !params) {
         return
     }
@@ -13,16 +13,16 @@ module.exports = ({ params, message, client }, db) => {
         return
     }
 
-    db.put(message.id, JSON.stringify({ user: message.author.id, params }))
-        .then(function() {
-            return db.get(message.id)
-        })
-        .then(function(value) {
-            console.log(value)
-        })
+    const id = shortid()
+    const saleDetail = params
+
+    db.put(id, JSON.stringify({ user: message.author.id, saleDetail }))
+        .then(
+            salesQueue.send(
+                `${id}: ${message.author} \n\`\`\`${saleDetail}\`\`\``
+            )
+        )
         .catch(function(err) {
             console.error(err)
         })
-
-    salesQueue.send(`${message.author}: ${params}`)
 }

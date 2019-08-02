@@ -1,10 +1,13 @@
 const os = require("os")
+const shortid = require("shortid").generate
 
 const uptime = require("./uptime")
 const sale = require("./sale")
 
-const level = require("level")
-const salesdb = level("database-sales")
+const dblist = require("./dblist")
+const dbclear = require("./dbclear")
+
+const salesdb = require("../db")()
 
 module.exports = {
     uptime: ({ message }) =>
@@ -14,5 +17,8 @@ module.exports = {
             os.hostname(),
             parseInt(os.freemem() / 1024 / 1024)
         ),
-    sale: options => sale(options, salesdb)
+    sale: options => sale(options, salesdb, shortid),
+
+    dblist: options => dblist(options, salesdb),
+    dbclear: options => dbclear(options, salesdb)
 }
