@@ -29,7 +29,5 @@ module.exports = ({ params, message, client }, db, shortid) => {
                 `${id}: ${message.author} \n\`\`\`${saleDetail}\`\`\``
             )
         )
-        .catch(function(err) {
-            console.error(err)
-        })
+        .catch(console.error)
 }

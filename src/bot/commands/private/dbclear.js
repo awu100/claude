@@ -24,8 +24,6 @@ module.exports = ({ message }, salesdb) => {
                         `Deleted ${salesToDelete.length} sales`
                     )
                 })
-                .catch(error => {
-                    console.error(error)
-                })
+                .catch(console.error)
         })
 }

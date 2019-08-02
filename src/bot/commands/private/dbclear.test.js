@@ -1,10 +1,11 @@
-const dblist = require("./dblist")
+const dbclear = require("./dbclear")
 
 describe("List Sales DB Records", () => {
     const on = jest.fn()
 
     const salesdb = {
-        createReadStream: jest.fn()
+        createReadStream: jest.fn(),
+        batch: jest.fn()
     }
 
     const message = {
@@ -24,20 +25,21 @@ describe("List Sales DB Records", () => {
             return { on }
         })
         salesdb.createReadStream.mockReturnValue({ on })
+        salesdb.batch.mockResolvedValue("a")
     })
 
     test("list records since we are me", () => {
-        dblist({ message }, salesdb)
+        dbclear({ message }, salesdb)
         expect(salesdb.createReadStream).toHaveBeenCalled()
     })
 
     test("records to not be listed cos we're not me", () => {
-        dblist({ message: { ...message, author: { id: "123" } } }, salesdb)
+        dbclear({ message: { ...message, author: { id: "123" } } }, salesdb)
         expect(salesdb.createReadStream).not.toHaveBeenCalled()
     })
 
     test("records to not be listed cos it's not a dm", () => {
-        dblist(
+        dbclear(
             { message: { ...message, channel: { type: "something" } } },
             salesdb
         )
