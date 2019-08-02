@@ -6,14 +6,18 @@ function clearSale({ message }, user, db) {
         return
     }
 
-    console.log("clear\n", message)
-    // .del(message.id)
-    // .then(message.delete())
-    // db.get(message.id, data => {
-    //     console.log(message.id, data)
-    // }).catch(error => {
-    //     console.error(error)
-    // })
+    const messageParts = message.content.match(/^(.*):/)
+    if (!messageParts || messageParts.length < 2) {
+        return
+    }
+
+    const id = messageParts[1]
+
+    db.del(id)
+        .then(message.delete())
+        .catch(error => {
+            console.error(error)
+        })
 }
 
 module.exports = clearSale

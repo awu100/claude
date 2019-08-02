@@ -16,7 +16,14 @@ module.exports = ({ params, message, client }, db, shortid) => {
     const id = shortid()
     const saleDetail = params
 
-    db.put(id, JSON.stringify({ user: message.author.id, saleDetail }))
+    db.put(
+        id,
+        JSON.stringify({
+            ts: Date.now().valueOf(),
+            user: message.author.id,
+            saleDetail
+        })
+    )
         .then(
             salesQueue.send(
                 `${id}: ${message.author} \n\`\`\`${saleDetail}\`\`\``

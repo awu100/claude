@@ -4,8 +4,8 @@ const shortid = require("shortid").generate
 const uptime = require("./uptime")
 const sale = require("./sale")
 
-const dblist = require("./dblist")
-const dbclear = require("./dbclear")
+const dblist = require("./private/dblist")
+const dbclear = require("./private/dbclear")
 
 const salesdb = require("../db")()
 
