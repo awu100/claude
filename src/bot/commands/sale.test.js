@@ -1,9 +1,9 @@
 const sale = require("./sale")
 
 describe("Sale", () => {
-    const shortid = jest.fn().mockReturnValue("123")
+    const shortid = jest.fn()
     const salesdb = {
-        put: jest.fn(() => Promise.resolve(""))
+        put: jest.fn()
     }
 
     const client = {
@@ -28,12 +28,16 @@ describe("Sale", () => {
     beforeEach(() => {
         jest.resetAllMocks()
         message = messageWith()
+        salesdb.put.mockResolvedValue(1)
+        shortid.mockReturnValue("123")
     })
 
     test("posts sale to sales-queue", () => {
         sale({ params: "2mc", message, client }, salesdb, shortid)
 
-        expect(client.channels[1].send).toHaveBeenCalledWith("BananaMan: 2mc")
+        expect(client.channels[1].send).toHaveBeenCalledWith(
+            "123: BananaMan \n```2mc```"
+        )
         expect(client.channels[0].send).not.toHaveBeenCalled()
     })
 
