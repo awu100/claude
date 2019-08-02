@@ -1,13 +1,20 @@
-function clearSale({ message }, user) {
-  if (message.channel.name !== "sales-queue") {
-    return;
-  }
+function clearSale({ message }, user, salesdb) {
+    if (message.channel.name !== "sales-queue") {
+        return
+    }
 
-  if (!message.mentions.users.has(user.id)) {
-    return;
-  }
+    if (!message.mentions.users.has(user.id)) {
+        return
+    }
 
-  message.delete();
+    salesdb
+        .del(message.id)
+        .then(ok => {
+            message.delete()
+        })
+        .catch(error => {
+            console.error(error)
+        })
 }
 
-module.exports = clearSale;
+module.exports = clearSale
