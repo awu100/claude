@@ -1,6 +1,11 @@
 const sale = require("./sale")
 
 describe("Sale", () => {
+    const shortid = jest.fn()
+    const salesdb = {
+        put: jest.fn()
+    }
+
     const client = {
         channels: [
             { name: "sales-queue", parent: "XB", send: jest.fn() },
@@ -23,25 +28,29 @@ describe("Sale", () => {
     beforeEach(() => {
         jest.resetAllMocks()
         message = messageWith()
+        salesdb.put.mockResolvedValue(1)
+        shortid.mockReturnValue("123")
     })
 
     test("posts sale to sales-queue", () => {
-        sale({ params: "2mc", message, client })
+        sale({ params: "2mc", message, client }, salesdb, shortid)
 
-        expect(client.channels[1].send).toHaveBeenCalledWith("BananaMan: 2mc")
+        expect(client.channels[1].send).toHaveBeenCalledWith(
+            "123: BananaMan \n```2mc```"
+        )
         expect(client.channels[0].send).not.toHaveBeenCalled()
     })
 
     test("no post because message was in the wrong queue", () => {
         message = messageWith({ name: "something" })
-        sale({ params: "2mc", message, client })
+        sale({ params: "2mc", message, client }, salesdb, shortid)
 
         expect(client.channels[1].send).not.toHaveBeenCalled()
         expect(client.channels[0].send).not.toHaveBeenCalled()
     })
 
     test("no post because no parameters", () => {
-        sale({ params: null, message, client })
+        sale({ params: null, message, client }, salesdb, shortid)
 
         expect(client.channels[1].send).not.toHaveBeenCalled()
         expect(client.channels[0].send).not.toHaveBeenCalled()
@@ -49,7 +58,7 @@ describe("Sale", () => {
 
     test("no post because can't find saleQueue in matching category", () => {
         message = messageWith({ parent: "something" })
-        sale({ params: "2mc", message, client })
+        sale({ params: "2mc", message, client }, salesdb, shortid)
 
         expect(client.channels[1].send).not.toHaveBeenCalled()
         expect(client.channels[0].send).not.toHaveBeenCalled()

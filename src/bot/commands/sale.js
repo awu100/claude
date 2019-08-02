@@ -1,4 +1,4 @@
-module.exports = ({ params, message, client }) => {
+module.exports = ({ params, message, client }, db, shortid) => {
     if (message.channel.name !== "sessions-chat" || !params) {
         return
     }
@@ -13,5 +13,21 @@ module.exports = ({ params, message, client }) => {
         return
     }
 
-    salesQueue.send(`${message.author}: ${params}`)
+    const id = shortid()
+    const saleDetail = params
+
+    db.put(
+        id,
+        JSON.stringify({
+            ts: Date.now().valueOf(),
+            user: message.author.id,
+            saleDetail
+        })
+    )
+        .then(
+            salesQueue.send(
+                `${id}: ${message.author} \n\`\`\`${saleDetail}\`\`\``
+            )
+        )
+        .catch(console.error)
 }

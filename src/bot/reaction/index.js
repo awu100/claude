@@ -1,7 +1,8 @@
-const clearSale = require("./clearSale");
+const clearSale = require("./clearSale")
+const salesdb = require("../db")()
 
 module.exports = (reaction, user) => {
-  setTimeout(() => {
-    clearSale(reaction, user);
-  }, 500);
-};
+    setTimeout(() => {
+        clearSale(reaction, user, salesdb)
+    }, 500)
+}
