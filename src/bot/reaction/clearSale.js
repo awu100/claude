@@ -6,14 +6,7 @@ function clearSale({ message }, user, db) {
         return
     }
 
-    const messageParts = message.content.match(/^(.*):/)
-    if (!messageParts || messageParts.length < 2) {
-        return
-    }
-
-    const id = messageParts[1]
-
-    db.del(id)
+    db.del(message.id)
         .then(message.delete())
         .catch(error => {
             console.error(error)

@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./src",
-    "test": "jest"
+    "test": "jest --silent",
+    "test:watch": "jest --watchAll"
   },
   "jest": {
     "collectCoverage": true,
@@ -20,6 +21,7 @@
     ]
   },
   "dependencies": {
+    "@types/jest": "^24.0.17",
     "discord.js": "^11.5.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",

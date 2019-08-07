@@ -1,27 +1,29 @@
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const handleRawEvent = require("./handleRawEvent");
-const bot = require("./bot");
-require("dotenv").config();
+const Discord = require("discord.js")
+const client = new Discord.Client()
+const handleRawEvent = require("./handleRawEvent")
+const bot = require("./bot")
+require("dotenv").config()
 
 client.once("ready", () => {
-  console.log("Connected to discord");
+    console.log("Connected to discord")
 
-  client.on("messageReactionAdd", (message, user) => {
-    bot.handleReaction(message, user, client);
-  });
+    // setInterval(bot.handleChase, 10 * 60 * 1000)
 
-  client.on("message", message => {
-    if (message.author.bot) {
-      return;
-    }
+    client.on("messageReactionAdd", (message, user) => {
+        bot.handleReaction(message, user, client)
+    })
 
-    bot.handleMessage(message, client);
-  });
+    client.on("message", message => {
+        if (message.author.bot) {
+            return
+        }
 
-  client.on("raw", ({ t: type, d: data }) =>
-    handleRawEvent({ data, type }, client, Discord)
-  );
-});
+        bot.handleMessage(message, client)
+    })
 
-client.login(process.env.TOKEN);
+    client.on("raw", ({ t: type, d: data }) =>
+        handleRawEvent({ data, type }, client, Discord)
+    )
+})
+
+client.login(process.env.TOKEN)

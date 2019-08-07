@@ -13,17 +13,15 @@ module.exports = ({ message }, salesdb) => {
         .on("data", function(data) {
             salesToDelete.push({ type: "del", key: data.key })
         })
-        .on("error", function(error) {
-            console.error(error)
-        })
+        .on("error", console.error)
         .on("end", () => {
             salesdb
                 .batch(salesToDelete)
-                .then(_ok => {
+                .then(
                     message.channel.send(
-                        `Deleted ${salesToDelete.length} sales`
+                        `Deleted ${salesToDelete.length} sales from DB`
                     )
-                })
+                )
                 .catch(console.error)
         })
 }

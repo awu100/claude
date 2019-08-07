@@ -1,5 +1,5 @@
-module.exports = ({ params, message, client }, db, shortid) => {
-    if (message.channel.name !== "sessions-chat" || !params) {
+module.exports = ({ params: saleDetail, message, client }, db) => {
+    if (message.channel.name !== "sessions-chat" || !saleDetail) {
         return
     }
 
@@ -13,21 +13,16 @@ module.exports = ({ params, message, client }, db, shortid) => {
         return
     }
 
-    const id = shortid()
-    const saleDetail = params
-
-    db.put(
-        id,
-        JSON.stringify({
-            ts: Date.now().valueOf(),
-            user: message.author.id,
-            saleDetail
-        })
-    )
-        .then(
-            salesQueue.send(
-                `${id}: ${message.author} \n\`\`\`${saleDetail}\`\`\``
+    return salesQueue
+        .send(`${message.author}: \`${saleDetail}\``)
+        .then(saleMessage => {
+            db.put(
+                saleMessage.id,
+                JSON.stringify({
+                    ts: Date.now().valueOf(),
+                    channel_id: saleMessage.channel.id
+                })
             )
-        )
-        .catch(console.error)
+        })
+        .catch(e => console.error("sale", { e }))
 }

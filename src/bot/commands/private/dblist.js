@@ -1,8 +1,5 @@
-module.exports = ({ message }, salesdb) => {
-    if (
-        message.channel.type !== "dm" ||
-        message.author.id !== "325265753773178881"
-    ) {
+module.exports = ({ message, client }, salesdb) => {
+    if (message.channel.type !== "dm") {
         return
     }
 
@@ -11,9 +8,22 @@ module.exports = ({ message }, salesdb) => {
     salesdb
         .createReadStream()
         .on("data", function(data) {
-            sales.push(
-                JSON.stringify({ [data.key]: JSON.parse(data.value) }, null, 2)
-            )
+            const payload = JSON.parse(data.value)
+
+            if (!payload.channel_id) {
+                return
+            }
+
+            const channel = client.channels.get(payload.channel_id)
+
+            channel
+                .fetchMessage(data.key)
+                .then(message => {})
+                .catch(error => {
+                    console.error(data.key, error)
+                })
+
+            sales.push(payload)
         })
         .on("error", function(error) {
             console.error(error)
@@ -24,6 +34,6 @@ module.exports = ({ message }, salesdb) => {
                 return
             }
 
-            message.channel.send(sales.join(",\n"))
+            message.channel.send(sales.map(sale => {}).join(",\n"))
         })
 }
