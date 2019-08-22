@@ -1,8 +1,8 @@
 const os = require("os")
-const shortid = require("shortid").generate
 
 const uptime = require("./uptime")
 const sale = require("./sale")
+const random = require("./random")
 
 const dblist = require("./private/dblist")
 const dbclear = require("./private/dbclear")
@@ -17,8 +17,9 @@ module.exports = {
             os.hostname(),
             parseInt(os.freemem() / 1024 / 1024)
         ),
-    sale: options => sale(options, salesdb, shortid),
+    sale: options => sale(options, salesdb),
 
     dblist: options => dblist(options, salesdb),
-    dbclear: options => dbclear(options, salesdb)
+    dbclear: options => dbclear(options, salesdb),
+    random: options => random(options)
 }
