@@ -3,16 +3,9 @@ module.exports = ({ message, params }, RichEmbed) => {
         return
     }
 
-    let messageBody
+    const messageBody = params
+        ? `@here **Please kick \`${params}\`!\n\nDo __not__ split kicks.**`
+        : `@here **Please kick the random!**`
 
-    if (params) {
-        messageBody = `@here **Please kick \`${params}\`!\n\nDo __not__ split kicks.**`
-    } else {
-        messageBody = `@here **Please kick the random!**`
-    }
-
-    const embed = new RichEmbed()
-    embed.setDescription(messageBody)
-    embed.setColor(0xff69b4)
-    message.channel.send(embed)
+    message.channel.send(`:rotating_light: ${messageBody} :rotating_light:`)
 }

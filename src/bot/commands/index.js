@@ -1,5 +1,4 @@
 const os = require("os")
-const { RichEmbed } = require("discord.js")
 
 const uptime = require("./uptime")
 const sale = require("./sale")
@@ -22,5 +21,5 @@ module.exports = {
 
     dblist: options => dblist(options, salesdb),
     dbclear: options => dbclear(options, salesdb),
-    random: options => random(options, RichEmbed)
+    random
 }
