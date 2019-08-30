@@ -28,6 +28,13 @@ describe("Inform users that a random is among us", () => {
             ":rotating_light: @here **Please kick `barryTheFish`!\n\nDo __not__ split kicks.** :rotating_light:"
         )
     })
+
+    test("Tells uses about a random in another channel containing 'sessions-chat'", () => {
+        message.channel.name = "something-sessions-chat-banana"
+        random({ message })
+
+        expect(message.channel.send).toHaveBeenCalled()
+    })
     describe("Should not say shit unless message came from #sessions-chat", () => {
         test("for single random", () => {
             message.channel.name = "banana-land"

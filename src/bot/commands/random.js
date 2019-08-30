@@ -1,5 +1,5 @@
-module.exports = ({ message, params }, RichEmbed) => {
-    if (message.channel.name !== "sessions-chat") {
+module.exports = ({ message, params }) => {
+    if (!message.channel.name.includes("sessions-chat")) {
         return
     }
 
