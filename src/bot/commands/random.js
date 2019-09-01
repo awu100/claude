@@ -7,5 +7,10 @@ module.exports = ({ message, params }) => {
         ? `@here **Please kick \`${params}\`!\n\nDo __not__ split kicks.**`
         : `@here **Please kick the random!**`
 
-    message.channel.send(`:rotating_light: ${messageBody} :rotating_light:`)
+    message.channel
+        .send(`:rotating_light: ${messageBody} :rotating_light:`)
+        .then(kickMessage => {
+            kickMessage.react("👢")
+            kickMessage.react("⏱")
+        })
 }

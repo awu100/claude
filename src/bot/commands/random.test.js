@@ -4,7 +4,7 @@ describe("Inform users that a random is among us", () => {
     const message = {
         channel: {
             name: "sessions-chat",
-            send: jest.fn()
+            send: jest.fn().mockResolvedValue({ react: jest.fn() })
         }
     }
 
