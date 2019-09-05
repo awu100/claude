@@ -16,11 +16,15 @@ module.exports = ({ params: saleDetail, message, client }, db) => {
     return salesQueue
         .send(`${message.author}: \`${saleDetail}\``)
         .then(saleMessage => {
+            saleMessage.react("💰")
+
             db.put(
                 saleMessage.id,
                 JSON.stringify({
                     ts: Date.now().valueOf(),
-                    channel_id: saleMessage.channel.id
+                    user_id: message.author.id,
+                    channel_id: saleMessage.channel.id,
+                    saleDetail
                 })
             )
         })

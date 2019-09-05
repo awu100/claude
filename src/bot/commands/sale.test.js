@@ -14,17 +14,23 @@ describe("Sale", () => {
 
     let message
 
+    const fakeSalesMessage = {
+        id: "123",
+        channel: { id: "987" },
+        react: jest.fn()
+    }
+
     const client = {
         channels: [
             {
                 name: "sales-queue",
                 parent: "XB",
-                send: jest.fn()
+                send: jest.fn().mockResolvedValue(fakeSalesMessage)
             },
             {
                 name: "sales-queue",
                 parent: "PS",
-                send: jest.fn()
+                send: jest.fn().mockResolvedValue(fakeSalesMessage)
             }
         ]
     }
@@ -39,29 +45,22 @@ describe("Sale", () => {
         }
     }
 
-    const fakeSalesMessage = {
-        id: "123",
-        channel: { id: "987" }
-    }
-
     beforeEach(() => {
-        jest.resetAllMocks()
-        message = messageWith()
-
-        client.channels[0].send.mockResolvedValue(fakeSalesMessage)
-        client.channels[1].send.mockResolvedValue(fakeSalesMessage)
+        jest.clearAllMocks()
     })
 
-    test("posts sale to sales-queue", async () => {
-        await sale({ params: "2mc", message, client }, salesdb)
+    test.only("posts sale to sales-queue", async () => {
+        await sale({ params: "2mc", message: messageWith(), client }, salesdb)
         expect(client.channels[1].send).toHaveBeenCalledWith("BananaMan: `2mc`")
         expect(client.channels[0].send).not.toHaveBeenCalled()
+        expect(fakeSalesMessage.react).toHaveBeenCalledWith("💰")
 
         expect(salesdb.put).toHaveBeenCalledWith(
             fakeSalesMessage.id,
             JSON.stringify({
                 ts: fakeTime,
-                channel_id: fakeSalesMessage.channel.id
+                channel_id: fakeSalesMessage.channel.id,
+                saleDetail: "2mc"
             })
         )
     })
@@ -76,7 +75,7 @@ describe("Sale", () => {
     })
 
     test("no post because no parameters", () => {
-        sale({ params: null, message, client }, salesdb)
+        sale({ params: null, message: messageWith(), client }, salesdb)
 
         expect(client.channels[1].send).not.toHaveBeenCalled()
         expect(client.channels[0].send).not.toHaveBeenCalled()
@@ -85,7 +84,7 @@ describe("Sale", () => {
 
     test("no post because can't find saleQueue in matching category", () => {
         message = messageWith({ parent: "something" })
-        sale({ params: "2mc", message, client }, salesdb)
+        sale({ params: "2mc", message: messageWith(), client }, salesdb)
 
         expect(client.channels[1].send).not.toHaveBeenCalled()
         expect(client.channels[0].send).not.toHaveBeenCalled()
