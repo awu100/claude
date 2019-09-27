@@ -11,7 +11,6 @@
     "test:watch": "jest --watchAll"
   },
   "jest": {
-    "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.js",
       "!**/index.js"
@@ -26,7 +25,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "level": "^5.0.1",
-    "shortid": "^2.2.14"
+    "pino": "^5.13.2"
   },
   "devDependencies": {
     "jest": "^24.8.0",

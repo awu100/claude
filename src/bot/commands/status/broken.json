@@ -1,0 +1,237 @@
+{
+    "services": [
+        {
+            "id": 1,
+            "name": "General",
+            "tag": "general",
+            "category_id": null,
+            "sandbox_category_id": null,
+            "alert_status": 2,
+            "priority": 1,
+            "updated": "2019-08-14T19:57:00",
+            "message": "We are experiencing unusually high contact volume at this time and are working to respond to requests in the order they were received. Thank you for your patience.",
+            "status": 1,
+            "recent_update": "2019-08-14T19:57:00",
+            "hash": "a15f6f713b533bf6d402274f77754d323cbd9e87"
+        },
+        {
+            "id": 5,
+            "name": "Support",
+            "tag": "support",
+            "category_id": null,
+            "sandbox_category_id": null,
+            "alert_status": 1,
+            "priority": 5,
+            "updated": "2019-08-14T19:59:00",
+            "message": "We are aware of an issue delaying the delivery of Gift items, Penthouse rebates, Shark Card rebates and GTA$ in Grand Theft Auto Online. We are working to complete these deliveries as soon as possible and appreciate your patience as we work to resolve this issue.",
+            "status": 1,
+            "recent_update": "2019-08-14T19:59:00",
+            "hash": "0abdcccd28e85a87368a377811e7a98a20b709fe"
+        },
+        {
+            "id": 2,
+            "name": "Red Dead Online",
+            "tag": "rdo",
+            "category_id": 115001624507,
+            "sandbox_category_id": 115002265888,
+            "alert_status": 0,
+            "priority": 2,
+            "updated": "2019-08-15T16:07:00",
+            "message": "",
+            "status": 3,
+            "recent_update": "2019-08-15T20:08:00",
+            "hash": "9fc86ba37133cd66c00dba8120bbba4a5d6c3163"
+        },
+        {
+            "id": 3,
+            "name": "Grand Theft Auto Online",
+            "tag": "gtao",
+            "category_id": 200013306,
+            "sandbox_category_id": 115002270987,
+            "alert_status": 0,
+            "priority": 3,
+            "updated": "2019-08-14T16:08:28",
+            "message": "",
+            "status": 2,
+            "recent_update": "2019-08-15T20:08:25",
+            "hash": "9306541412f894532f109310474171e456d60245"
+        },
+        {
+            "id": 4,
+            "name": "Social Club",
+            "tag": "sc",
+            "category_id": 200013106,
+            "sandbox_category_id": 115002270967,
+            "alert_status": 0,
+            "priority": 4,
+            "updated": "2019-08-14T16:08:28",
+            "message": "",
+            "status": 1,
+            "recent_update": "2019-08-14T16:08:28",
+            "hash": "9306541412f894532f109310474171e456d60245"
+        }
+    ],
+    "statuses": [
+        {
+            "id": 1,
+            "name": "General",
+            "tag": "general",
+            "category_id": null,
+            "sandbox_category_id": null,
+            "alert_status": 2,
+            "priority": 1,
+            "updated": "2019-08-14T19:57:00",
+            "services_platforms": [
+                {
+                    "id": 9,
+                    "service_id": 1,
+                    "name": "Alert",
+                    "service_status_id": 1,
+                    "priority": 1,
+                    "updated": "2019-08-14T16:08:28"
+                }
+            ],
+            "message": "We are experiencing unusually high contact volume at this time and are working to respond to requests in the order they were received. Thank you for your patience.",
+            "status": 1,
+            "recent_update": "2019-08-14T19:57:00",
+            "hash": "a15f6f713b533bf6d402274f77754d323cbd9e87"
+        },
+        {
+            "id": 2,
+            "name": "Red Dead Online",
+            "tag": "rdo",
+            "category_id": 115001624507,
+            "sandbox_category_id": 115002265888,
+            "alert_status": 0,
+            "priority": 2,
+            "updated": "2019-08-15T16:07:00",
+            "services_platforms": [
+                {
+                    "id": 1,
+                    "service_id": 2,
+                    "name": "PS4",
+                    "service_status_id": 3,
+                    "priority": 2,
+                    "updated": "2019-08-15T20:08:00"
+                },
+                {
+                    "id": 2,
+                    "service_id": 2,
+                    "name": "Xbox One",
+                    "service_status_id": 3,
+                    "priority": 2,
+                    "updated": "2019-08-15T20:08:00"
+                }
+            ],
+            "message": "",
+            "status": 3,
+            "recent_update": "2019-08-15T20:08:00",
+            "hash": "9fc86ba37133cd66c00dba8120bbba4a5d6c3163"
+        },
+        {
+            "id": 3,
+            "name": "Grand Theft Auto Online",
+            "tag": "gtao",
+            "category_id": 200013306,
+            "sandbox_category_id": 115002270987,
+            "alert_status": 0,
+            "priority": 3,
+            "updated": "2019-08-14T16:08:28",
+            "services_platforms": [
+                {
+                    "id": 3,
+                    "service_id": 3,
+                    "name": "PC",
+                    "service_status_id": 2,
+                    "priority": 1,
+                    "updated": "2019-08-15T20:08:25"
+                },
+                {
+                    "id": 4,
+                    "service_id": 3,
+                    "name": "PS4",
+                    "service_status_id": 2,
+                    "priority": 2,
+                    "updated": "2019-08-15T20:08:32"
+                },
+                {
+                    "id": 5,
+                    "service_id": 3,
+                    "name": "Xbox One",
+                    "service_status_id": 2,
+                    "priority": 3,
+                    "updated": "2019-08-15T20:08:00"
+                },
+                {
+                    "id": 6,
+                    "service_id": 3,
+                    "name": "PS3",
+                    "service_status_id": 2,
+                    "priority": 4,
+                    "updated": "2019-08-15T20:08:00"
+                },
+                {
+                    "id": 7,
+                    "service_id": 3,
+                    "name": "Xbox 360",
+                    "service_status_id": 2,
+                    "priority": 5,
+                    "updated": "2019-08-15T20:08:00"
+                }
+            ],
+            "message": "",
+            "status": 2,
+            "recent_update": "2019-08-15T20:08:25",
+            "hash": "9306541412f894532f109310474171e456d60245"
+        },
+        {
+            "id": 4,
+            "name": "Social Club",
+            "tag": "sc",
+            "category_id": 200013106,
+            "sandbox_category_id": 115002270967,
+            "alert_status": 0,
+            "priority": 4,
+            "updated": "2019-08-14T16:08:28",
+            "services_platforms": [
+                {
+                    "id": 8,
+                    "service_id": 4,
+                    "name": "All Features",
+                    "service_status_id": 1,
+                    "priority": 1,
+                    "updated": "2019-08-14T16:08:28"
+                }
+            ],
+            "message": "",
+            "status": 1,
+            "recent_update": "2019-08-14T16:08:28",
+            "hash": "9306541412f894532f109310474171e456d60245"
+        },
+        {
+            "id": 5,
+            "name": "Support",
+            "tag": "support",
+            "category_id": null,
+            "sandbox_category_id": null,
+            "alert_status": 1,
+            "priority": 5,
+            "updated": "2019-08-14T19:59:00",
+            "services_platforms": [
+                {
+                    "id": 10,
+                    "service_id": 5,
+                    "name": "Alert",
+                    "service_status_id": 1,
+                    "priority": 1,
+                    "updated": "2019-08-14T16:08:28"
+                }
+            ],
+            "message": "We are aware of an issue delaying the delivery of Gift items, Penthouse rebates, Shark Card rebates and GTA$ in Grand Theft Auto Online. We are working to complete these deliveries as soon as possible and appreciate your patience as we work to resolve this issue.",
+            "status": 1,
+            "recent_update": "2019-08-14T19:59:00",
+            "hash": "0abdcccd28e85a87368a377811e7a98a20b709fe"
+        }
+    ],
+    "updated": "August 15, 2019 at 9:08:00 PM GMT+01:00"
+}

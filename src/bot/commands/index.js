@@ -4,10 +4,7 @@ const uptime = require("./uptime")
 const sale = require("./sale")
 const random = require("./random")
 
-const dblist = require("./private/dblist")
-const dbclear = require("./private/dbclear")
-
-const salesdb = require("../db")()
+const { dblist, chase, dbclear } = require("./private")
 
 module.exports = {
     uptime: ({ message }) =>
@@ -17,9 +14,9 @@ module.exports = {
             os.hostname(),
             parseInt(os.freemem() / 1024 / 1024)
         ),
-    sale: options => sale(options, salesdb),
-
-    dblist: options => dblist(options, salesdb),
-    dbclear: options => dbclear(options, salesdb),
-    random
+    sale,
+    dblist,
+    dbclear,
+    random,
+    chase
 }

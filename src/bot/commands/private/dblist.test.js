@@ -1,12 +1,9 @@
 const dblist = require("./dblist")
+const salesdb = require("../../db")()
+
+jest.mock("../../db")
 
 describe("List Sales DB Records", () => {
-    const on = jest.fn()
-
-    const salesdb = {
-        createReadStream: jest.fn()
-    }
-
     const message = {
         channel: {
             type: "dm",
@@ -15,26 +12,11 @@ describe("List Sales DB Records", () => {
     }
 
     beforeEach(() => {
-        jest.resetAllMocks()
-        on.mockImplementation((event, cb) => {
-            if (event === "data") {
-                cb({ key: "123", value: '{ "p": "abc" }' })
-            }
-            return { on }
-        })
-        salesdb.createReadStream.mockReturnValue({ on })
+        jest.clearAllMocks()
     })
 
-    test("list records since we are me", () => {
+    test("list records", () => {
         dblist({ message }, salesdb)
         expect(salesdb.createReadStream).toHaveBeenCalled()
-    })
-
-    test("records to not be listed cos it's not a dm", () => {
-        dblist(
-            { message: { ...message, channel: { type: "something" } } },
-            salesdb
-        )
-        expect(salesdb.createReadStream).not.toHaveBeenCalled()
     })
 })

@@ -1,4 +1,7 @@
-module.exports = ({ params: saleDetail, message, client }, db) => {
+const { logger } = require("../helpers")
+const db = require("../db")()
+
+module.exports = ({ params: saleDetail, message, client }) => {
     if (message.channel.name !== "sessions-chat" || !saleDetail) {
         return
     }
@@ -13,9 +16,13 @@ module.exports = ({ params: saleDetail, message, client }, db) => {
         return
     }
 
-    return salesQueue
+    salesQueue
         .send(`${message.author}: \`${saleDetail}\``)
         .then(saleMessage => {
+            logger.info(
+                `<${message.author.username}> added <${saleDetail}> to the queue`
+            )
+
             saleMessage.react("💰")
 
             db.put(

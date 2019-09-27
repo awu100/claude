@@ -1,29 +1,32 @@
-module.exports = ({ message, client }, salesdb) => {
-    if (message.channel.type !== "dm") {
-        return
-    }
+const db = require("../../db")()
 
+module.exports = ({ message, client }) => {
     const sales = []
 
-    salesdb
-        .createReadStream()
+    db.createReadStream()
         .on("data", function(data) {
             const payload = JSON.parse(data.value)
 
             if (!payload.channel_id) {
+                console.error("bad data", JSON.stringify(data, null, 2))
+                db.del(data.key)
                 return
             }
 
             const channel = client.channels.get(payload.channel_id)
 
-            channel
-                .fetchMessage(data.key)
-                .then(message => {})
-                .catch(error => {
-                    console.error(data.key, error)
-                })
-
-            sales.push(payload)
+            sales.push(
+                JSON.stringify(
+                    {
+                        [data.key]: {
+                            ...payload,
+                            time: new Date(payload.ts)
+                        }
+                    },
+                    null,
+                    2
+                )
+            )
         })
         .on("error", function(error) {
             console.error(error)
@@ -34,6 +37,6 @@ module.exports = ({ message, client }, salesdb) => {
                 return
             }
 
-            message.channel.send(sales.map(sale => {}).join(",\n"))
+            message.channel.send("`" + sales.join(",\n") + "`")
         })
 }

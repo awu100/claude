@@ -6,3 +6,5 @@ database-*
 .env
 *.log
 yarn.lock
+*.log.json
+member.json
