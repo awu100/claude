@@ -20,7 +20,7 @@ module.exports = (member, client) => {
 
     const name = `${username}#${discriminator}`
 
-    const leaver = `${name}${aka()} has left Discord. Roles: ${roleArray}\``
+    const leaver = `${name}${aka()} has left Discord. Roles: \`${roleArray}\``
 
     if (!departures) {
         logger.info(leaver)
