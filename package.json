@@ -24,7 +24,6 @@
     "discord.js": "^11.5.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "level": "^5.0.1",
     "pino": "^5.13.2"
   },
   "devDependencies": {

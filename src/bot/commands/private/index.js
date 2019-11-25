@@ -1,11 +1,11 @@
-const dblist = require("./dblist")
-const dbclear = require("./dbclear")
-const { chase } = require("./chase")
+const uptime = require("./uptime")
 
 function checkUser(command, params) {
     const [{ message }] = params
+    const devUserId = process.env["DEV_USER_ID"] || ""
 
-    if (message.author.username !== "_dotSpace") {
+    if (message.author.id !== devUserId) {
+        message.channel.send("Unauthorised request")
         return
     }
 
@@ -13,7 +13,5 @@ function checkUser(command, params) {
 }
 
 module.exports = {
-    dblist: (...params) => checkUser(dblist, params),
-    chase: (...params) => checkUser(chase, params),
-    dbclear: (...params) => checkUser(dbclear, params)
+    uptime: (...params) => checkUser(uptime, params)
 }

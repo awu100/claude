@@ -1,18 +1,37 @@
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const handleRawEvent = require("./handleRawEvent")
+const handleLeaver = require("./handleLeaver")
 const bot = require("./bot")
 require("dotenv").config()
 
-const { logger } = require("./bot/helpers")
+const { logger } = require("./helpers")
 
-client.once("ready", () => {
-    console.log(`${new Date().toString().substr(0, 24)} Connected to discord`)
+function messageDev(msg) {
+    const devUserId = process.env["DEV_USER_ID"]
 
-    // setInterval(() => bot.handleChase({ client }), 5 * 60 * 1000) // 5 minutes
+    if (!devUserId) {
+        return
+    }
+
+    client
+        .fetchUser(devUserId)
+        .then(user => {
+            user.send(msg)
+        })
+        .catch(error => logger.error(error.message))
+}
+
+client.once("ready", async () => {
+    const loginMessage = `${new Date()
+        .toString()
+        .substr(0, 24)} Connected to discord`
+    console.log(loginMessage)
+
+    messageDev(loginMessage)
 
     client.on("messageReactionAdd", (message, user) => {
-        bot.handleReaction(message, user, client)
+        bot.handleReaction(message, user)
     })
 
     client.on("message", message => {
@@ -23,28 +42,19 @@ client.once("ready", () => {
         bot.handleMessage(message, client)
     })
 
-    client.on("guildMemberRemove", member => {
-        const {
-            user: { username, discriminator },
-            displayName,
-            roles
-        } = member
+    client.on("guildMemberRemove", member => handleLeaver(member, client))
 
-        const roleArray = [...roles].map(([_id, role]) => role.name).join(", ")
+    client.on("disconnect", () => {
+        logger.error("Got disconnected")
+        messageDev("Got disconnected")
+        process.exit(1)
+    })
 
-        const departures = client.channels.find(
-            channel => channel.name === "departures"
-        )
+    client.on("error", error => {
+        logger.error(error.message)
+        messageDev("Got an error")
 
-        const name = `${username}#${discriminator} AKA ${displayName}`
-
-        const leaver = `${name} has left Discord. Roles: \`(${roleArray.length}) ${roleArray}\``
-
-        if (!departures) {
-            logger.info(leaver)
-        } else {
-            departures.send(leaver)
-        }
+        process.exit(1)
     })
 
     client.on("raw", ({ t: type, d: data }) =>

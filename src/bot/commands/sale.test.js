@@ -1,7 +1,4 @@
 const sale = require("./sale")
-jest.mock("../db")
-
-const salesdb = require("../db")()
 
 describe("Sale", () => {
     const fakeTime = Date.now().valueOf()
@@ -48,30 +45,17 @@ describe("Sale", () => {
         expect(client.channels[1].send).toHaveBeenCalledWith("BananaMan: `2mc`")
         expect(client.channels[0].send).not.toHaveBeenCalled()
         expect(fakeSalesMessage.react).toHaveBeenCalledWith("💰")
-
-        expect(salesdb.put).toHaveBeenCalledWith(
-            fakeSalesMessage.id,
-            JSON.stringify({
-                ts: fakeTime,
-                channel_id: fakeSalesMessage.channel.id,
-                saleDetail: "2mc"
-            })
-        )
     })
 
     test("no post because message was in the wrong queue", () => {
-        sale(
-            {
-                params: "2mc",
-                message: messageWith({ name: "something" }),
-                client
-            },
-            salesdb
-        )
+        sale({
+            params: "2mc",
+            message: messageWith({ name: "something" }),
+            client
+        })
 
         expect(client.channels[1].send).not.toHaveBeenCalled()
         expect(client.channels[0].send).not.toHaveBeenCalled()
-        expect(salesdb.put).not.toHaveBeenCalled()
     })
 
     test("no post because no parameters", () => {
@@ -79,7 +63,6 @@ describe("Sale", () => {
 
         expect(client.channels[1].send).not.toHaveBeenCalled()
         expect(client.channels[0].send).not.toHaveBeenCalled()
-        expect(salesdb.put).not.toHaveBeenCalled()
     })
 
     test("no post because can't find saleQueue in matching category", () => {
@@ -88,7 +71,6 @@ describe("Sale", () => {
 
         expect(client.channels[1].send).not.toHaveBeenCalled()
         expect(client.channels[0].send).not.toHaveBeenCalled()
-        expect(salesdb.put).not.toHaveBeenCalled()
     })
 
     test.todo("No post because you've already got a sale in the queue")

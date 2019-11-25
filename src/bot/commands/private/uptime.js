@@ -1,6 +1,11 @@
+const os = require("os")
 const pluralize = (word, number) => `${number} ${word}${number > 1 ? "s" : ""}`
 
-module.exports = (message, uptime, hostname, freemem) => {
+module.exports = ({ message }) => {
+    const uptime = parseInt(process.uptime())
+    const hostname = os.hostname()
+    const freemem = parseInt(os.freemem() / 1024 / 1024)
+
     if (message.channel.type !== "dm") {
         return
     }

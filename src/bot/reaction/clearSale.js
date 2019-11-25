@@ -1,6 +1,4 @@
-const { logger } = require("../helpers")
-
-function clearSale({ message, emoji }, user_id, db, client) {
+function clearSale({ message }, user_id) {
     if (
         message.channel.name !== "sales-queue" ||
         !message.mentions.users.has(user_id)
@@ -8,15 +6,7 @@ function clearSale({ message, emoji }, user_id, db, client) {
         return
     }
 
-    const user = client.users.get(user_id)
-
-    logger.info(
-        `<${user.username}> cleared sale from sales-queue with ${emoji.name}`
-    )
-
-    db.del(message.id)
-        .then(message.delete())
-        .catch(console.error)
+    message.delete()
 }
 
 module.exports = clearSale
