@@ -1,7 +1,7 @@
 const { logger } = require("../../helpers")
 
 module.exports = ({ params: saleDetail, message, client }) => {
-    if (message.channel.name !== "sessions-chat" || !saleDetail) {
+    if (!message.channel.name.includes("sessions-chat") || !saleDetail) {
         return
     }
 

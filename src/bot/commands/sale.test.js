@@ -47,6 +47,18 @@ describe("Sale", () => {
         expect(fakeSalesMessage.react).toHaveBeenCalledWith("💰")
     })
 
+    test("post sale from channel matching *sessions-chat*", async () => {
+        await sale({
+            params: "2mc",
+            message: messageWith({ name: "something-sessions-chat-another" }),
+            client
+        })
+
+        expect(client.channels[1].send).toHaveBeenCalledWith("BananaMan: `2mc`")
+        expect(client.channels[0].send).not.toHaveBeenCalled()
+        expect(fakeSalesMessage.react).toHaveBeenCalledWith("💰")
+    })
+
     test("no post because message was in the wrong queue", () => {
         sale({
             params: "2mc",

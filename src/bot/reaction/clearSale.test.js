@@ -16,14 +16,12 @@ describe("Clear sale from #sales-queue", () => {
         delete: jest.fn()
     })
 
-    let message
-
     beforeEach(() => {
         jest.clearAllMocks()
-        message = messageWith()
     })
 
     test("Should delete sale queue message where mentioned user reacts", () => {
+        const message = messageWith()
         clearSale({ message }, user.id)
         expect(message.delete).toHaveBeenCalled()
     })
