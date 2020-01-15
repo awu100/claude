@@ -1,4 +1,5 @@
 const uptime = require("./uptime")
+const yeet = require("./yeet")
 
 function checkUser(command, params) {
     const [{ message }] = params
@@ -12,6 +13,12 @@ function checkUser(command, params) {
     command(...params)
 }
 
-module.exports = {
-    uptime: (...params) => checkUser(uptime, params)
-}
+const privateCommands = Object.entries({ uptime, yeet }).reduce(
+    (commands, [name, command]) => ({
+        ...commands,
+        [name]: (...params) => checkUser(command, params)
+    }),
+    {}
+)
+
+module.exports = privateCommands
