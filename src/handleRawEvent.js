@@ -1,13 +1,22 @@
 const Discord = require("discord.js")
 
+const validTypes = {
+    MESSAGE_REACTION_ADD: "messageReactionAdd",
+    MESSAGE_REACTION_REMOVE: "messageReactionRemove"
+}
+
 module.exports = async ({ type, data }, client) => {
-    if (type !== "MESSAGE_REACTION_ADD") {
+    const eventType = validTypes[type]
+    if (!eventType) {
         return
     }
 
     const channel = client.channels.get(data.channel_id)
 
-    if (!channel || channel.messages.has(data.message_id)) {
+    if (
+        eventType === validTypes["MESSAGE_REACTION_ADD"] &&
+        (!channel || channel.messages.has(data.message_id))
+    ) {
         // message is cached and already has event
         return
     }
@@ -34,5 +43,5 @@ module.exports = async ({ type, data }, client) => {
         )
     }
 
-    client.emit("messageReactionAdd", reaction, user)
+    client.emit(eventType, reaction, user)
 }

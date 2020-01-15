@@ -31,7 +31,11 @@ client.once("ready", async () => {
     messageDev(loginMessage)
 
     client.on("messageReactionAdd", (message, user) => {
-        bot.handleReaction(message, user)
+        bot.handleReaction.add(message, user)
+    })
+
+    client.on("messageReactionRemove", (message, user) => {
+        bot.handleReaction.remove(message, user)
     })
 
     client.on("message", message => {
