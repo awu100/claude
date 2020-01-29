@@ -1,6 +1,7 @@
 const { Attachment } = require("discord.js")
 const { DateTime } = require("luxon")
 const fs = require("fs")
+const csv = require("csv-stringify/lib/sync")
 
 module.exports = ({ message }) => {
     if (
@@ -11,7 +12,7 @@ module.exports = ({ message }) => {
     }
 
     const productionDate = DateTime.local().toFormat("yyyy-LL-dd")
-    const fileName = `/tmp/${productionDate}-memberlist.json`
+    const fileName = `/tmp/${productionDate}-memberlist.csv`
 
     const devUserId = process.env["DEV_USER_ID"] || ""
 
@@ -40,7 +41,9 @@ module.exports = ({ message }) => {
         }
     })
 
-    fs.writeFile(fileName, JSON.stringify(users), err => {
+    const user_csv = csv(users, { header: true })
+
+    fs.writeFile(fileName, user_csv, err => {
         if (err) {
             console.log(err)
             message.channel.send("error saving the temp file")
