@@ -27,9 +27,13 @@ module.exports = ({ message }) => {
             .filter(role => role !== "@everyone")
             .join(",")
 
+        const joined = member.joinedAt
+            ? member.joinedAt.toISOString()
+            : undefined
+
         return {
             id,
-            joined: member.joinedAt.toISOString(),
+            joined,
             username: `${username}#${discriminator}`,
             nickname: member.nickname || undefined,
             roles
