@@ -1,5 +1,9 @@
-function doCommand({ command = "", params }, commands, message, client) {
-    const selectedCommand = commands[command]
+function doCommand({ command, params }, commands, message, client) {
+    if (String(command) === "") {
+        return
+    }
+
+    const selectedCommand = commands[String(command).toLowerCase()]
 
     if (!selectedCommand) {
         return
