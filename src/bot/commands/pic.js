@@ -24,21 +24,25 @@ module.exports = ({ message, params, client }) => {
         message.channel.send(":warning: I can only find one user at a time")
     }
 
-    const user = client.users.find(user =>
-        user.username.toLowerCase().includes(userToFind)
+    const member = message.guild.members.find(
+        m =>
+            m.displayName.toLowerCase().includes(userToFind) ||
+            m.user.username.toLowerCase().includes(userToFind)
     )
 
-    if (!user) {
+    if (!member) {
         message.channel.send(`:x: User matching \`${userToFind}\` not found`)
         return
     }
 
+    const user = member.user
+
     if (!user.avatarURL) {
         message.channel.send(
-            `:x: User \`${userToFind}\` doesn't have a custom avatar`
+            `:x: User \`${member.displayName}\` doesn't have a custom avatar`
         )
         return
     }
-  
+
     message.channel.send(user.avatarURL)
 }
