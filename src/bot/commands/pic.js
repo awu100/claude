@@ -33,5 +33,12 @@ module.exports = ({ message, params, client }) => {
         return
     }
 
+    if (!user.avatarURL) {
+        message.channel.send(
+            `:x: User \`${userToFind}\` doesn't have a custom avatar`
+        )
+        return
+    }
+  
     message.channel.send(user.avatarURL)
 }
