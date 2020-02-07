@@ -1,5 +1,5 @@
 function commandSplitter(commandString) {
-    if (commandString.length < 2 || commandString[0] !== "!") {
+    if (commandString.length < 2 || !commandString.startsWith("!")) {
         return null
     }
 
