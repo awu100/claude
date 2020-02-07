@@ -1,7 +1,7 @@
 const { DateTime } = require("luxon")
 
 module.exports = ({ message }) => {
-    if (message.channel.name.startsWith("staff")) {
+    if (!message.channel.name.startsWith("staff")) {
         return
     }
 
