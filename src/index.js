@@ -2,6 +2,7 @@ const Discord = require("discord.js")
 const client = new Discord.Client()
 const handleRawEvent = require("./handleRawEvent")
 const handleLeaver = require("./handleLeaver")
+const handleRename = require("./handleRename")
 const bot = require("./bot")
 require("dotenv").config()
 
@@ -47,6 +48,10 @@ client.once("ready", async () => {
     })
 
     client.on("guildMemberRemove", member => handleLeaver(member, client))
+
+    client.on("guildMemberUpdate", (prev, curr) =>
+        handleRename({ prev, curr }, client)
+    )
 
     client.on("disconnect", () => {
         logger.error("Got disconnected")
