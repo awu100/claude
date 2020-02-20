@@ -24,8 +24,8 @@ module.exports = ({ message }) => {
     const users = message.guild.members.map(member => {
         const { id, username, discriminator } = member.user
         const roles = member.roles
+            .filter(role => role.name !== "@everyone")
             .map(role => `"${role.name}"`)
-            .filter(role => role !== "@everyone")
             .join(",")
 
         const joined = member.joinedAt
