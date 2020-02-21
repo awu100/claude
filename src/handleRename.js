@@ -9,18 +9,18 @@ function handleRename({ prev, curr }, client) {
         return
     }
 
-    const staffChat = client.channels.find(
-        channel => channel.name === "staff-chat"
+    const admissions = client.channels.find(
+        channel => channel.name === "admissions"
     )
 
     const staffRole = curr.guild.roles.find(role => role.name === "Staff")
 
     const nameChange = `${staffRole} \`${prev.displayName}\` changed their nickname to \`${curr.displayName}\``
 
-    if (!staffChat || !staffRole) {
+    if (!admissions || !staffRole) {
         logger.info(nameChange)
     } else {
-        staffChat.send(nameChange)
+        admissions.send(nameChange)
     }
 }
 

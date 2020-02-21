@@ -1,3 +1,4 @@
+const claude = require("./help")
 const sale = require("./sale")
 const random = require("./random")
 const memberlist = require("./memberlist")
@@ -7,6 +8,7 @@ const pic = require("./pic")
 const private = require("./private")
 
 module.exports = {
+    claude,
     sale,
     s: sale,
     random,
