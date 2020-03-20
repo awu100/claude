@@ -2,7 +2,7 @@ const { logger } = require("./helpers")
 
 module.exports = (member, client) => {
     const {
-        user: { username, discriminator },
+        user: { username, discriminator, id },
         displayName,
         roles
     } = member
@@ -15,12 +15,14 @@ module.exports = (member, client) => {
 
     const aka = () =>
         username.toLowerCase() !== displayName.toLowerCase()
-            ? ` AKA ${displayName}`
+            ? ` AKA \`${displayName}\``
             : ""
 
     const name = `${username}#${discriminator}`
+    const userid = `ID: \`${id}\``
+    const userroles = `Roles: \`${roleArray}\``
 
-    const leaver = `${name}${aka()} has left Discord. Roles: \`${roleArray}\``
+    const leaver = `\`${name}\`${aka()} has left Discord\n${userid}\n${userroles}`
 
     if (!departures) {
         logger.info(leaver)
