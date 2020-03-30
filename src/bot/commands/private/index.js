@@ -1,4 +1,5 @@
 const uptime = require("./uptime")
+const friends = require("./friends")
 
 function checkUser(command, params) {
     const [{ message }] = params
@@ -12,7 +13,7 @@ function checkUser(command, params) {
     command(...params)
 }
 
-const privateCommands = Object.entries({ uptime }).reduce(
+const privateCommands = Object.entries({ uptime, friends }).reduce(
     (commands, [name, command]) => ({
         ...commands,
         [name]: (...params) => checkUser(command, params)
