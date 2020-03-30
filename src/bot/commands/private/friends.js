@@ -4,9 +4,19 @@ const fs = require("fs")
 const csv = require("csv-stringify/lib/sync")
 
 module.exports = async ({ message, params }) => {
+    if (!params) {
+        message.channel.send(`Error: PSN username required`)
+        return
+    }
+
     const res = await fetch(
         `http://localhost:3001/api/friends/${params}`
     ).then(res => res.json())
+
+    if (res.friendError) {
+        message.channel.send(`Error: ${res.friendError}`)
+        return
+    }
 
     const friends_csv = csv(
         res.friends.map(friends => ({ friends })),
