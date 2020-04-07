@@ -63,7 +63,7 @@ client.once("ready", async () => {
     })
 
     client.on("rateLimit", (error) => {
-        logger.error(error.message)
+        logger.error(error)
         messageDev("I've hit a rate limit")
     })
 
