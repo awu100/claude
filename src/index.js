@@ -17,10 +17,10 @@ function messageDev(msg) {
 
     client
         .fetchUser(devUserId)
-        .then(user => {
+        .then((user) => {
             user.send(msg)
         })
-        .catch(error => logger.error(error.message))
+        .catch((error) => logger.error(error.message))
 }
 
 client.once("ready", async () => {
@@ -35,7 +35,7 @@ client.once("ready", async () => {
         bot.handleReaction.add(message, user, client)
     })
 
-    client.on("message", message => {
+    client.on("message", (message) => {
         if (message.author.bot) {
             return
         }
@@ -43,7 +43,7 @@ client.once("ready", async () => {
         bot.handleMessage(message, client)
     })
 
-    client.on("guildMemberRemove", member => handleLeaver(member, client))
+    client.on("guildMemberRemove", (member) => handleLeaver(member, client))
 
     client.on("guildMemberUpdate", (prev, curr) =>
         handleRename({ prev, curr }, client)
@@ -55,16 +55,21 @@ client.once("ready", async () => {
         process.exit(1)
     })
 
-    client.on("error", error => {
+    client.on("error", (error) => {
         logger.error(error.message)
         messageDev("Got an error")
 
         process.exit(1)
     })
 
-    client.on("raw", ({ t: type, d: data }) =>
+    client.on("rateLimit", (error) => {
+        logger.error(error.message)
+        messageDev("I've hit a rate limit")
+    })
+
+    client.on("raw", ({ t: type, d: data }) => {
         handleRawEvent({ data, type }, client)
-    )
+    })
 })
 
 client.login(process.env.TOKEN)
