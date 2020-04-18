@@ -1,23 +1,23 @@
-const random = require("./random")
+const ready = require("./ready")
 
-describe("Inform users that a random is among us", () => {
+describe("Inform heist is ready", () => {
     const message = {
         channel: {
-            name: "sessions-chat",
+            name: "random-bullshit-chat",
             send: jest.fn().mockResolvedValue({ react: jest.fn() })
         }
     }
 
     beforeEach(() => {
         jest.clearAllMocks()
-        message.channel.name = "sessions-chat"
+        message.channel.name = "random-bullshit-chat"
     })
 
     test("Tell users about a single random", () => {
         random({ message })
 
         expect(message.channel.send).toHaveBeenCalledWith(
-            ":rotating_light: @here **Please kick the random!** :rotating_light:"
+            "@here **MY HEIST IS READY!**"
         )
     })
     test("Tell users that there are many randoms and who to kick", () => {
@@ -25,7 +25,7 @@ describe("Inform users that a random is among us", () => {
         random({ params, message })
 
         expect(message.channel.send).toHaveBeenCalledWith(
-            ":rotating_light: @here **Please kick `barryTheFish`!\n\nDo __not__ split kicks.** :rotating_light:"
+            "@here **MY `barryTheFish` HEIST IS READY!**"
         )
     })
 

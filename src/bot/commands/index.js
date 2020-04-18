@@ -1,6 +1,6 @@
 const claude = require("./help")
-const sale = require("./sale")
-const random = require("./random")
+const heist = require("./heist")
+const ready = require("./ready")
 const memberlist = require("./memberlist")
 const numbers = require("./numbers")
 const pic = require("./pic")
@@ -10,10 +10,10 @@ const private = require("./private")
 
 module.exports = {
     claude,
-    sale,
-    s: sale,
-    random,
-    r: random,
+    heist,
+    heist: sale,
+    ready,
+    r: ready,
     memberlist,
     numbers,
     yeet,

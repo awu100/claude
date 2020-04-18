@@ -1,13 +1,13 @@
 const { logger } = require("../../helpers")
 
 module.exports = ({ params: saleDetail, message, client }) => {
-    if (!message.channel.name.includes("sessions-chat") || !saleDetail) {
+    if (!message.channel.name.includes("general-bullshit-chat") || !saleDetail) {
         return
     }
 
     const salesQueue = client.channels.find(
         channel =>
-            channel.name === "sales-queue" &&
+            channel.name === "heist-queue" &&
             channel.parent == message.channel.parent
     )
 
